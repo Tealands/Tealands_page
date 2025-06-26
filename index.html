@@ -1,45 +1,147 @@
-<!DOCTYPE HTML PUBRIC ~>
-<html lang = "ja">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-
-<!--
-<p>HTMLhはこれでコメントアウトする。</p>
--->
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> <!--<p>ここにタイトルを入れる</p>--></title>
-<style>
-header {
-    padding: 20px;
-    text-align: center;
-    background-color: #75d0e9;
-}
-body {
-    background-color: rgb(255, 255, 255);
-    color: rgb(2, 1, 1);
-    font-family: Arial, sans-serif;
-    margin: 18px;
-    padding: 18px;
-    text-align: center;
-}
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin: 5px;
-}
-#result {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>自己紹介ページ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', 'ヒラギノ角ゴ ProN', 'Meiryo', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #4a90e2;
+      color: #fff;
+      padding: 30px 0 15px 0;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0 0 10px 0;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #ffd700;
+    }
+    section {
+      background: #fff;
+      margin: 30px auto;
+      padding: 30px 20px;
+      border-radius: 12px;
+      max-width: 700px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    }
+    section h2 {
+      border-left: 6px solid #4a90e2;
+      padding-left: 12px;
+      color: #4a90e2;
+      margin-top: 0;
+    }
+    #about img {
+      border-radius: 50%;
+      border: 3px solid #4a90e2;
+      margin-bottom: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    #portfolio ul, #skills ul {
+      list-style: disc inside;
+    }
+    #contact p, #contact a {
+      font-size: 1.1em;
+    }
+    footer {
+      text-align: center;
+      padding: 18px 0;
+      background: #4a90e2;
+      color: #fff;
+      margin-top: 40px;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 600px) {
+      section {
+        padding: 18px 5px;
+      }
+      header h1 {
+        font-size: 1.5em;
+      }
+      nav ul {
+        gap: 12px;
+      }
+    }
+  </style>
 </head>
-<body><body hgcolor = "" text = "">
-<img src="https://maximum.vc/images/hero.png" alt="Maximumのロゴ" class="hero">//写真入れる
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gxbklMUNT70?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-</iframe>//動画埋め込み（autoplayを追加すると自動で再生される）
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HPZOOhzql7w" style="display:none;" allowfullscreen>
-</iframe>//style="display:noneによって画面は非表示で音声だけが再生される
-<a href="../index4.html">戻る</a>//リンク（文字は変えられる）
+<body>
+  <!-- ヘッダー -->
+  <header>
+    <h1>あなたの名前</h1>
+    <nav>
+      <ul>
+        <li><a href="#about">自己紹介</a></li>
+        <li><a href="#skills">スキル</a></li>
+        <li><a href="#portfolio">ポートフォリオ</a></li>
+        <li><a href="#contact">連絡先</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 自己紹介 -->
+  <section id="about">
+    <h2>自己紹介</h2>
+    <img src="profile.jpg" alt="プロフィール写真" width="150">
+    <p>簡単な挨拶や自己紹介文をここに書きます。</p>
+  </section>
+
+  <!-- スキル・経験 -->
+  <section id="skills">
+    <h2>スキル・経験</h2>
+    <ul>
+      <li>HTML/CSS/JavaScript</li>
+      <li>Python</li>
+      <li>その他のスキル</li>
+    </ul>
+  </section>
+
+  <!-- ポートフォリオ -->
+  <section id="portfolio">
+    <h2>ポートフォリオ</h2>
+    <ul>
+      <li>制作物1の紹介</li>
+      <li>制作物2の紹介</li>
+    </ul>
+  </section>
+
+  <!-- 連絡先 -->
+  <section id="contact">
+    <h2>連絡先</h2>
+    <p>Email: example@example.com</p>
+    <p>Twitter: <a href="#">@yourhandle</a></p>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <p>&copy; 2025 あなたの名前</p>
+  </footer>
+</body>
+</html>
