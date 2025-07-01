@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <link rel="icon" href="keep_out/Game_Developing.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パスワード入力画面</title>
+    <script>
+      function checkStep1(event) {
+        event.preventDefault();
+        const correctPassword = "24TI080"; // 1段階目のパスワード
+        const input = document.getElementById("password").value;
+        if (input === correctPassword) {
+          document.getElementById("step1").style.display = "none";
+          document.getElementById("step2").style.display = "block";
+        } else {
+          alert("パスワードが違います。");
+        }
+      }
+      function checkStep2(event) {
+        event.preventDefault();
+        const correctCode = "Hello_World!"; // 2段階目のコード
+        const input = document.getElementById("code").value;
+        if (input === correctCode) {
+          // ここで自己紹介ページのHTMLを表示
+          document.body.innerHTML = `
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <link rel="icon" href="keep_out/Game_Developing.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <title>Tealand自己紹介ページ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', 'ヒラギノ角ゴ ProN', 'Meiryo', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #4a90e2;
+      color: #fff;
+      padding: 30px 0 15px 0;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0 0 10px 0;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #ffd700;
+    }
+    section {
+      background: #fff;
+      margin: 30px auto;
+      padding: 30px 20px;
+      border-radius: 12px;
+      max-width: 700px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    }
+    section h2 {
+      border-left: 6px solid #4a90e2;
+      padding-left: 12px;
+      color: #4a90e2;
+      margin-top: 0;
+    }
+    #about img {
+      border-radius: 50%;
+      border: 3px solid #4a90e2;
+      margin-bottom: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    #portfolio ul, #skills ul {
+      list-style: disc inside;
+    }
+    #contact p, #contact a {
+      font-size: 1.1em;
+    }
+    footer {
+      text-align: center;
+      padding: 18px 0;
+      background: #4a90e2;
+      color: #fff;
+      margin-top: 40px;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 600px) {
+      section {
+        padding: 18px 5px;
+      }
+      header h1 {
+        font-size: 1.5em;
+      }
+      nav ul {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tealand</h1>
+    <nav>
+      <ul>
+        <li><a href="#about_me">自己紹介</a></li>
+        <li><a href="#career">経歴</a></li>
+        <li><a href="#tool&language">使用ツール・言語</a></li>
+        <li><a href="#portfolio">ポートフォリオ</a></li>
+        <li><a href="#contact">連絡先</a></li>
+        <li><a href="#related_site">関連サイト</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section id="about_me">
+    <h2>自己紹介</h2>
+    <img src="keep_out/myself2.JPG" alt="プロフィール写真" width="150">
+    <p>埼玉大学工学部情報工学科2年　山本疾風</p>
+  </section>
+  <section id="career">
+    <h2>経歴</h2>
+    <ul>
+      <li>2021年4月 - 千葉県立印旛明誠高等学校入学</li>
+      <li>2022年2月 - 英検準2級取得</li>
+      <li>2022年11月 - 数検2級取得</li>
+      <li>2023年7月 - 英検2級取得</li>
+      <li>2024年3月 - 千葉県立印旛明誠高等学校卒業</li>
+      <li>2024年4月 - 埼玉大学工学部情報工学科入学・Maximum入会</li>
+      <li>2024年9月 - 普通自動車免許（マニュアル）取得</li>
+      <li>2025年4月 - Maximum副会長兼ゲーム開発班班長</li>
+    </ul>
+    <p>現在、ゲーム開発班での活動を通じて、プログラミングやゲームデザインのスキルを磨いています。</p>
+  </section>
+  <section id="#tool&language">
+    <h2>使用ツール</h2>
+    <ul>
+      <li>Visual Studio Code</li>
+      <li>Git Hub</li>
+      <li>Unity Hub</li>
+      <li>Android Studio</li>
+    </ul>
+    <h2>使用言語</h2>
+    <ul>
+      <li>HTML/CSS/JavaScript</li>
+      <li>C/C++</li>
+      <li>Markdown/SQL</li>
+    </ul>
+  </section>
+  <section id="portfolio">
+    <h2>ポートフォリオ</h2>
+    <ul>
+      <a href="http://quiz.game.teams.maximum.vc/">サークルのゲーム開発班で作ったサイト</a><br>
+      <a href="Tea-time/index_main.html">個人で作ったゲームサイト</a>
+    </ul>
+  </section>
+  <section id="contact">
+    <h2>連絡先</h2>
+    <p>yamamoto.h.618@ms.saitama-u.ac.jp</p>
+    <p>GitHub: <a href="https://github.com/Tealands">Tealands</a></p>
+    <p>X(旧Twitter): <a href="https://x.com/yeah_hi0525">@Yeah Hi</a></p>
+    <p>Instagram: <a href="https://www.instagram.com/">tealand_0525</a></p>
+  </section>
+  <section id="related_site">
+    <h2>関連サイト</h2>
+    <a href="https://maximum.vc/">Maximum公式サイト</a>
+  </section>
+  <footer>
+    <p>&copy; 2025 Tealand自己紹介ページ</p>
+  </footer>
+</body>
+</html>
+          `;
+        } else {
+          alert("認証コードが違います。");
+        }
+      }
+    </script>
+</head>
+<body>
+    <h1>二段階認証</h1>
+    <div id="step1">
+      <form onsubmit="checkStep1(event)">
+          <label for="password">パスワード1:</label>
+          <input type="password" id="password" name="password" required>
+          <br><br>
+          <button type="submit">次へ</button>
+      </form>
+    </div>
+    <div id="step2" style="display:none;">
+      <form onsubmit="checkStep2(event)">
+          <label for="code">パスワード2:</label>
+          <input type="password" id="code" name="code" required>
+          <br><br>
+          <button type="submit">ログイン</button>
+      </form>
+    </div>
+</body>
+</html>
+
+    </script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;    
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #4a90e2;
+        margin-bottom: 20px;
+      }
+      form {
+        max-width: 400px;
+        margin: 0 auto;
+        background: #fff;           
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        display: block;
+        margin-bottom: 9px;
+      }
+      input[type="password"] {
+        width: 95%;
+        padding: 9px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #357ABD;
+      }
+      #step2 {
+        display: none;
+      }
+    </style>
+</head>
+<body>
