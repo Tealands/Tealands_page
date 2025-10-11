@@ -46,7 +46,7 @@
 <body>
     <h1>ディレクトリ自動生成ツール</h1>
     <p>ディレクトリ構造をテキスト形式で入力してください。例:</p>
-    <pre>
+    <pre><!-- ここでディレクトリ構造を読み取る -->
 project-root/
 ├── index.html
 ├── css/
@@ -59,13 +59,6 @@ project-root/
     <h2>生成結果:</h2>
     <pre id="resultOutput"></pre>
 
-    <script>
-        function generateDirectory() {
-            const input = document.getElementById('directoryInput').value;
-            const output = document.getElementById('resultOutput');
-            output.textContent = input;
-            alert("生成機能はまだ実装されていません。今後のバージョンにご期待ください！");
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

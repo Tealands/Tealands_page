@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>特殊囲碁 - 対局</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", sans-serif;
+      text-align: center;
+      background-color: #f7f3e3;
+    }
+    #board {
+      position: relative;
+      margin: 20px auto;
+      background-color: #f3d9a3;
+      border: 2px solid #000;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+    .stone {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      transition: 0.2s;
+    }
+    .black { background-color: black; }
+    .white { background-color: white; border: 1px solid #000; }
+    #turnPhase { font-size: 24px; margin: 10px; }
+    #controls { margin-bottom: 10px; }
+    button {
+      font-size: 18px;
+      padding: 6px 12px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body onload="initializeGame()">
+  <div id="controls">
+    <button onclick="toggleMoveMode()">石移動モード切替</button>
+    <button onclick="undo()">⏪ 1手戻す</button>
+    <button onclick="goHome()">🏠 ホームへ戻る</button>
+  </div>
+
+  <div id="board">
+    <canvas id="grid"></canvas>
+  </div>
+
+  <div id="turnPhase">黒の手番</div>
+
+  <script>
+    let SIZE = 19;
+    const CELL = 30;
+    const OFFSET = CELL;
+    let board = [];
+    let selectedStones = [];
+    let moveMode = false;
+    let turnCounter = 0;
+    let history = [];
+
+    function goHome() {
+      if (confirm("対局を終了してホームへ戻りますか？")) {
+        window.location.href = "title.html";
+      }
+    }
+
+    function getBoardSizeFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      const size = parseInt(params.get("size")) || 19;
+      return [9, 13, 19].includes(size) ? size : 19;
+    }
+
+    function initializeGame() {
+      SIZE = getBoardSizeFromURL();
+      initializeBoard();
+    }
+
+    function initializeBoard() {
+      board = boardState();
+      setupCanvas();
+      drawGrid();
+      drawBoard();
+    }
+
+    function boardState() {
+      return Array.from({ length: SIZE }, () => Array(SIZE).fill(0));
+    }
+
+    function setupCanvas() {
+      const boardDiv = document.getElementById("board");
+      const canvas = document.getElementById("grid");
+      const length = (SIZE - 1) * CELL + OFFSET * 2 - CELL;
+      boardDiv.style.width = length + "px";
+      boardDiv.style.height = length + "px";
+      canvas.width = length;
+      canvas.height = length;
+    }
+
+    function drawGrid() {
+      const canvas = document.getElementById("grid");
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = "#555";
+      ctx.lineWidth = 1;
+      const length = (SIZE - 1) * CELL + OFFSET * 2 - CELL;
+
+      for (let i = 0; i < SIZE; i++) {
+        const pos = OFFSET + i * CELL;
+        ctx.beginPath();
+        ctx.moveTo(OFFSET, pos);
+        ctx.lineTo(length - OFFSET + CELL, pos);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(pos, OFFSET);
+        ctx.lineTo(pos, length - OFFSET + CELL);
+        ctx.stroke();
+      }
+      drawStars(ctx);
+    }
+
+    function drawStars(ctx) {
+      ctx.fillStyle = "#000";
+      let starCoords = [];
+      if (SIZE === 9) starCoords = [2, 4, 6];
+      else if (SIZE === 13) starCoords = [3, 6, 9];
+      else if (SIZE === 19) starCoords = [3, 9, 15];
+      else return;
+      for (const i of starCoords) {
+        for (const j of starCoords) {
+          const x = OFFSET + j * CELL;
+          const y = OFFSET + i * CELL;
+          ctx.beginPath();
+          ctx.arc(x, y, 3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    function drawBoard() {
+      const boardDiv = document.getElementById("board");
+      document.querySelectorAll(".stone").forEach(s => s.remove());
+      for (let i = 0; i < SIZE; i++) {
+        for (let j = 0; j < SIZE; j++) {
+          if (board[i][j] !== 0) {
+            const stone = document.createElement("div");
+            stone.classList.add("stone", board[i][j] === 1 ? "black" : "white");
+            stone.style.left = (OFFSET + j * CELL) + "px";
+            stone.style.top = (OFFSET + i * CELL) + "px";
+            boardDiv.appendChild(stone);
+          }
+        }
+      }
+    }
+
+    // --- 以下は前回同様のロジック ---
+    function saveState() {
+      const boardCopy = board.map(row => [...row]);
+      history.push({ board: boardCopy, turnCounter, moveMode });
+    }
+
+    function undo() {
+      if (history.length === 0) {
+        alert("戻せる手はありません。");
+        return;
+      }
+      const prev = history.pop();
+      board = prev.board.map(row => [...row]);
+      turnCounter = prev.turnCounter;
+      moveMode = prev.moveMode;
+      drawBoard();
+      updateTurnPhaseDisplay();
+    }
+
+    function updateTurnPhaseDisplay() {
+      const turnPhase = document.getElementById("turnPhase");
+      if (Math.floor(turnCounter) % 2 === 0) turnPhase.innerText = "黒の手番";
+      else turnPhase.innerText = "白の手番";
+    }
+
+    function TurnPhase(mode = "normal") {
+      if (mode === "normal") turnCounter += 1;
+      else if (mode === "move") turnCounter += 0.5;
+      updateTurnPhaseDisplay();
+    }
+
+    function placeStone(x, y) {
+      const turn = document.getElementById("turnPhase").innerText;
+      const player = turn === "黒の手番" ? 1 : 2;
+
+      if (board[y][x] === 0) {
+        saveState();
+        board[y][x] = player;
+        checkAndRemoveSurrounded(3 - player);
+        drawBoard();
+        TurnPhase("normal");
+      } else {
+        alert("そこには置けません。");
+      }
+    }
+
+    function toggleMoveMode() {
+      moveMode = !moveMode;
+      selectedStones = [];
+      alert(moveMode ? "石移動モード：自分の石2個を選んで動かしてください。" : "通常モードに戻りました。");
+    }
+
+    document.getElementById("board").addEventListener("click", e => {
+      const rect = document.getElementById("board").getBoundingClientRect();
+      const xClick = e.clientX - rect.left - OFFSET;
+      const yClick = e.clientY - rect.top - OFFSET;
+      const x = Math.round(xClick / CELL);
+      const y = Math.round(yClick / CELL);
+      if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) return;
+
+      const turn = document.getElementById("turnPhase").innerText;
+      const player = turn === "黒の手番" ? 1 : 2;
+
+      if (!moveMode) {
+        placeStone(x, y);
+      } else {
+        if (board[y][x] === player) {
+          selectedStones.push({x, y});
+          if (selectedStones.length === 2) {
+            moveSelectedStones(player);
+            selectedStones = [];
+            moveMode = false;
+          }
+        } else {
+          alert("自分の石を選んでください。");
+        }
+      }
+    });
+
+    function moveSelectedStones(player) {
+      saveState();
+      for (const stone of selectedStones) {
+        const {x, y} = stone;
+        const direction = prompt("移動方向を入力（上:W, 下:S, 左:A, 右:D）").toUpperCase();
+        let nx = x, ny = y;
+        if (direction === "W") ny--;
+        else if (direction === "S") ny++;
+        else if (direction === "A") nx--;
+        else if (direction === "D") nx++;
+        else continue;
+
+        if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE || board[ny][nx] !== 0) {
+          alert("その方向へは動かせません。");
+          continue;
+        }
+        board[y][x] = 0;
+        board[ny][nx] = player;
+        checkAndRemoveSurrounded(3 - player);
+      }
+      drawBoard();
+      TurnPhase("move");
+    }
+
+    function checkAndRemoveSurrounded(targetPlayer) {
+      const visited = Array.from({ length: SIZE }, () => Array(SIZE).fill(false));
+      for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+          if (board[y][x] === targetPlayer && !visited[y][x]) {
+            const group = [];
+            const liberties = countLiberties(x, y, targetPlayer, visited, group);
+            if (liberties === 0) {
+              for (const {gx, gy} of group) board[gy][gx] = 0;
+            }
+          }
+        }
+      }
+    }
+
+    function countLiberties(x, y, player, visited, group) {
+      const stack = [{x, y}];
+      let liberties = 0;
+      const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+      while (stack.length > 0) {
+        const {x, y} = stack.pop();
+        if (visited[y][x]) continue;
+        visited[y][x] = true;
+        group.push({gx: x, gy: y});
+        for (const [dx, dy] of dirs) {
+          const nx = x + dx, ny = y + dy;
+          if (nx < 0 || ny < 0 || nx >= SIZE || ny >= SIZE) continue;
+          if (board[ny][nx] === 0) liberties++;
+          else if (board[ny][nx] === player && !visited[ny][nx]) stack.push({x: nx, y: ny});
+        }
+      }
+      return liberties;
+    }
+  </script>
+</body>
+</html>

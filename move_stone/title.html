@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>特殊囲碁 - ホーム</title>
+  <style>
+    body {
+      font-family: "Noto Sans JP", sans-serif;
+      text-align: center;
+      background-color: #f7f3e3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 40px;
+    }
+    select, button {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>特殊囲碁</h1>
+  <p>盤のサイズを選んでください</p>
+  <select id="boardSize">
+    <option value="9">9路盤</option>
+    <option value="13">13路盤</option>
+    <option value="19" selected>19路盤</option>
+  </select>
+  <br />
+  <button onclick="startGame()">対局開始</button>
+
+  <script>
+    function startGame() {
+      const size = document.getElementById("boardSize").value;
+      window.location.href = `move_stone.html?size=${size}`;
+    }
+  </script>
+</body>
+</html>
