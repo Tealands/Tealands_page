@@ -39,6 +39,15 @@
       padding: 6px 12px;
       margin: 5px;
     }
+    #moveControls {
+      display: none;
+      margin: 15px;
+    }
+    #moveControls button {
+      margin: 4px;
+      font-size: 16px;
+      padding: 5px 10px;
+    }
   </style>
 </head>
 <body onload="initializeGame()">
@@ -52,6 +61,20 @@
     <canvas id="grid"></canvas>
   </div>
 
+  <div id="moveControls">
+    <h3>移動方向を選択</h3>
+    <div>
+      <button onclick="moveSelectedStone('W')">↑</button>
+    </div>
+    <div>
+      <button onclick="moveSelectedStone('A')">←</button>
+      <button onclick="moveSelectedStone('D')">→</button>
+    </div>
+    <div>
+      <button onclick="moveSelectedStone('S')">↓</button>
+    </div>
+  </div>
+
   <div id="turnPhase">黒の手番</div>
 
   <script>
@@ -59,8 +82,9 @@
     const CELL = 30;
     const OFFSET = CELL;
     let board = [];
-    let selectedStones = [];
+    let selectedStone = null;
     let moveMode = false;
+    let moveCount = 0; // 1ターン中の移動回数
     let turnCounter = 0;
     let history = [];
 
@@ -82,14 +106,10 @@
     }
 
     function initializeBoard() {
-      board = boardState();
+      board = Array.from({ length: SIZE }, () => Array(SIZE).fill(0));
       setupCanvas();
       drawGrid();
       drawBoard();
-    }
-
-    function boardState() {
-      return Array.from({ length: SIZE }, () => Array(SIZE).fill(0));
     }
 
     function setupCanvas() {
@@ -158,10 +178,9 @@
       }
     }
 
-    // --- 以下は前回同様のロジック ---
     function saveState() {
       const boardCopy = board.map(row => [...row]);
-      history.push({ board: boardCopy, turnCounter, moveMode });
+      history.push({ board: boardCopy, turnCounter, moveMode, moveCount });
     }
 
     function undo() {
@@ -173,6 +192,7 @@
       board = prev.board.map(row => [...row]);
       turnCounter = prev.turnCounter;
       moveMode = prev.moveMode;
+      moveCount = prev.moveCount;
       drawBoard();
       updateTurnPhaseDisplay();
     }
@@ -183,22 +203,20 @@
       else turnPhase.innerText = "白の手番";
     }
 
-    function TurnPhase(mode = "normal") {
-      if (mode === "normal") turnCounter += 1;
-      else if (mode === "move") turnCounter += 0.5;
+    function TurnPhase() {
+      turnCounter += 1;
       updateTurnPhaseDisplay();
     }
 
     function placeStone(x, y) {
       const turn = document.getElementById("turnPhase").innerText;
       const player = turn === "黒の手番" ? 1 : 2;
-
       if (board[y][x] === 0) {
         saveState();
         board[y][x] = player;
         checkAndRemoveSurrounded(3 - player);
         drawBoard();
-        TurnPhase("normal");
+        TurnPhase();
       } else {
         alert("そこには置けません。");
       }
@@ -206,59 +224,80 @@
 
     function toggleMoveMode() {
       moveMode = !moveMode;
-      selectedStones = [];
-      alert(moveMode ? "石移動モード：自分の石2個を選んで動かしてください。" : "通常モードに戻りました。");
+      moveCount = 0;
+      selectedStone = null;
+      document.getElementById("moveControls").style.display = moveMode ? "block" : "none";
+      alert(moveMode ? "石移動モード：自分の石を選んでください（最大2回まで移動可）。" : "通常モードに戻りました。");
     }
-
-    document.getElementById("board").addEventListener("click", e => {
+  document.getElementById("board").addEventListener("click", e => {
       const rect = document.getElementById("board").getBoundingClientRect();
       const xClick = e.clientX - rect.left - OFFSET;
       const yClick = e.clientY - rect.top - OFFSET;
       const x = Math.round(xClick / CELL);
       const y = Math.round(yClick / CELL);
+      
+      // 盤外クリックは無視
       if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) return;
 
       const turn = document.getElementById("turnPhase").innerText;
       const player = turn === "黒の手番" ? 1 : 2;
 
       if (!moveMode) {
+        // **【修正】通常モード:**
+        // 座標(x, y)に石を配置する処理を呼び出す
         placeStone(x, y);
       } else {
+        // **石移動モード:**
         if (board[y][x] === player) {
-          selectedStones.push({x, y});
-          if (selectedStones.length === 2) {
-            moveSelectedStones(player);
-            selectedStones = [];
-            moveMode = false;
-          }
+          // 自分の石を選択
+          selectedStone = {x, y, player};
+          alert(`選択中の石 (${x},${y})。方向を選んでください。`);
         } else {
+          // 自分の石ではない
           alert("自分の石を選んでください。");
         }
       }
     });
 
-    function moveSelectedStones(player) {
-      saveState();
-      for (const stone of selectedStones) {
-        const {x, y} = stone;
-        const direction = prompt("移動方向を入力（上:W, 下:S, 左:A, 右:D）").toUpperCase();
-        let nx = x, ny = y;
-        if (direction === "W") ny--;
-        else if (direction === "S") ny++;
-        else if (direction === "A") nx--;
-        else if (direction === "D") nx++;
-        else continue;
 
-        if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE || board[ny][nx] !== 0) {
-          alert("その方向へは動かせません。");
-          continue;
-        }
-        board[y][x] = 0;
-        board[ny][nx] = player;
-        checkAndRemoveSurrounded(3 - player);
+    function moveSelectedStone(direction) {
+      if (!selectedStone) return;
+      const {x, y, player} = selectedStone;
+      let nx = x, ny = y;
+
+      if (direction === "W") ny -= 1;
+      else if (direction === "S") ny += 1;
+      else if (direction === "A") nx -= 1;
+      else if (direction === "D") nx += 1;
+
+      if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE) {
+        alert("その方向には動かせません（盤外）。");
+        return;
       }
+
+      if (board[ny][nx] !== 0) {
+        alert("その方向には石があります。動かせません。");
+        return;
+      }
+
+      saveState();
+      board[y][x] = 0;
+      board[ny][nx] = player;
+      checkAndRemoveSurrounded(3 - player);
       drawBoard();
-      TurnPhase("move");
+
+      moveCount++;
+      selectedStone = {x: nx, y: ny, player};
+
+      if (moveCount >= 2) {
+        moveMode = false;
+        moveCount = 0;
+        document.getElementById("moveControls").style.display = "none";
+        TurnPhase();
+        alert("2回移動しました。手番交代です。");
+      } else {
+        alert("もう一度1マス移動できます。");
+      }
     }
 
     function checkAndRemoveSurrounded(targetPlayer) {
