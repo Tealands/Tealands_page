@@ -9,3 +9,4 @@ This is a repository for Tealands_page.
 - デザイン刷新
 - 真ん中に出てくる消す広告
 - スクロール型広告
+- ロード画面
