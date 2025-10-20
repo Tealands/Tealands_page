@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <link rel="icon" href="../keep_out/Game_Developing.png" type="image/x-icon">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ローカル保存TODO（繰り返し・一括削除対応）</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans JP',sans-serif;margin:24px;background:#f7f8fb}
+    .wrap{max-width:720px;margin:0 auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 6px 20px rgba(30,30,60,0.06)}
+    h1{margin:0 0 12px;font-size:20px}
+    .input-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+    input[type=text],input[type=datetime-local],input[type=number]{flex:1;padding:10px;border:1px solid #ddd;border-radius:8px}
+    select{padding:10px;border:1px solid #ddd;border-radius:8px}
+    button{padding:8px 12px;border-radius:8px;border:0;background:#2563eb;color:#fff;cursor:pointer}
+    ul{list-style:none;padding:0;margin:0}
+    li{display:flex;align-items:center;gap:8px;padding:8px;border-bottom:1px solid #f0f2f6;flex-wrap:wrap}
+    li .txt{flex:1}
+    .small{font-size:12px;color:#666}
+    .controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+    .muted{background:#eee;color:#333}
+    .date-label{font-size:12px;color:#888;margin-left:8px;}
+    .repeat-label{font-size:12px;color:#0a0;}
+    .show-from-label{font-size:12px;color:#06a;}
+    .guide {background:#f0f4ff;border-left:4px solid #2563eb;padding:10px 14px;margin-bottom:16px;border-radius:6px;font-size:14px;line-height:1.6;}
+    code {background:#eef;border-radius:4px;padding:1px 4px;}
+    #auto-end-label {font-size:13px;color:#333;margin:4px 0 12px 2px;}
+    #bulk-controls{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>ローカル保存TODO（繰り返し・一括削除対応）</h1>
+
+    <!-- 説明 -->
+    <div class="guide">
+      <strong>使い方：</strong>
+      <ul style="margin:6px 0 0 16px;">
+        <li><b>締切日時：</b> 最初の日時を設定。</li>
+        <li><b>繰り返し設定：</b> <code>毎週</code>・<code>2週間ごと</code>・<code>毎月</code>。</li>
+        <li><b>繰り返し回数：</b> 終了日は自動計算。</li>
+        <li><b>何日前から表示：</b> 締切の◯日前から表示。</li>
+      </ul>
+    </div>
+
+    <!-- 入力欄 -->
+    <div class="input-row">
+      <input id="todo-input" type="text" placeholder="やることを入力" />
+      <input id="todo-date" type="datetime-local" />
+      <select id="repeat-select">
+        <option value="">繰り返しなし</option>
+        <option value="weekly">毎週</option>
+        <option value="biweekly">2週間ごと</option>
+        <option value="monthly">毎月</option>
+      </select>
+      <input id="repeat-count" type="number" min="1" value="5" placeholder="繰り返し回数" style="max-width:120px;" />
+      <input id="show-from" type="number" min="0" value="0" placeholder="何日前から表示" style="max-width:110px;" />
+      <button id="add-btn">追加</button>
+    </div>
+
+    <div id="auto-end-label"></div>
+
+    <!-- 一括操作ボタン -->
+    <div id="bulk-controls">
+      <input type="checkbox" id="select-all"> <label for="select-all">全選択</label>
+      <button id="delete-selected" class="muted">✔ 選択したタスクを削除</button>
+    </div>
+
+        <div class="controls">
+      <button id="export-btn" class="muted">JSONでエクスポート</button>
+      <button id="import-btn" class="muted">JSONをインポート</button>
+      <button id="save-fsa" class="muted">直接ファイル保存（File System Access）</button>
+      <input id="file-input" type="file" accept="application/json" style="display:none" />
+    </div>
+    <!-- リスト -->
+    <ul id="list"></ul>
+
+
+
+    <p class="small">
+      自動バックアップ：ブラウザの <code>localStorage</code> に保存されます。
+    </p>
+  </div>
+
+  <script>
+    
+    const STORAGE_KEY='local_todo_bulk_v1';
+    let todos=[];
+
+    const input=document.getElementById('todo-input');
+    const dateInput=document.getElementById('todo-date');
+    const repeatSelect=document.getElementById('repeat-select');
+    const repeatCountInput=document.getElementById('repeat-count');
+    const showFromInput=document.getElementById('show-from');
+    const addBtn=document.getElementById('add-btn');
+    const listEl=document.getElementById('list');
+    const endLabel=document.getElementById('auto-end-label');
+    const selectAll=document.getElementById('select-all');
+    const deleteSelected=document.getElementById('delete-selected');
+
+    const exportBtn=document.getElementById('export-btn');
+    const importBtn=document.getElementById('import-btn');
+    const fileInput=document.getElementById('file-input');
+    const saveFsaBtn=document.getElementById('save-fsa');
+    let fileHandle=null;
+
+    function saveToLocalStorage(){localStorage.setItem(STORAGE_KEY,JSON.stringify(todos));}
+    function loadFromLocalStorage(){
+      const raw=localStorage.getItem(STORAGE_KEY);
+      if(!raw)return;
+      try{todos=JSON.parse(raw);}catch{todos=[];}
+    }
+
+    // 自動終了日
+function updateAutoEndLabel(){
+  const base=dateInput.value?new Date(dateInput.value):null;
+  const repeat=repeatSelect.value;
+  const count=Number(repeatCountInput.value)||0;
+  if(!base||!repeat||count<=1){endLabel.textContent='';return;}
+  let end = new Date(base);
+  if(repeat === 'monthly'){
+    end.setMonth(base.getMonth() + (count - 1));
+  }else{
+    const intervalDays=repeat==='weekly'?7:repeat==='biweekly'?14:0;
+    end.setDate(base.getDate()+(count-1)*intervalDays);
+  }
+  endLabel.textContent=`終了日：${end.getMonth()+1}月${end.getDate()}日`;
+}
+    dateInput.addEventListener('change',updateAutoEndLabel);
+    repeatSelect.addEventListener('change',updateAutoEndLabel);
+    repeatCountInput.addEventListener('input',updateAutoEndLabel);
+
+    function shouldShowTask(t){
+      if(!t.date||t.done)return true;
+      const showFrom=Number(t.showFrom)||0;
+      const today=new Date();today.setHours(0,0,0,0);
+      const deadline=new Date(t.date);deadline.setHours(0,0,0,0);
+      const showDate=new Date(deadline);showDate.setDate(deadline.getDate()-showFrom);
+      return today>=showDate;
+    }
+
+function render(){
+  listEl.innerHTML='';
+  todos.sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  todos.forEach((t,i)=>{
+    const li=document.createElement('li');
+    const chkMain=document.createElement('input');
+    chkMain.type='checkbox';chkMain.className='select-task';chkMain.dataset.index=i;
+
+    const done=document.createElement('input');
+    done.type='checkbox';done.checked=!!t.done;
+    done.addEventListener('change',()=>{t.done=done.checked;saveToLocalStorage();render();});
+
+    const span=document.createElement('span');
+    span.className='txt';span.textContent=t.text;
+    if(t.done) span.style.textDecoration='line-through';
+
+    if(t.date){
+      const dateLabel=document.createElement('span');
+      dateLabel.className='date-label';
+
+      // 📅 日付をローカル時間で表示＆曜日を追加
+      const d = new Date(t.date);
+      const weekdays = ['日','月','火','水','木','金','土'];
+      const wd = weekdays[d.getDay()];
+      const y = d.getFullYear();
+      const m = d.getMonth() + 1;
+      const day = d.getDate();
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      dateLabel.textContent = `期限:${y}/${m}/${day}(${wd}) ${hh}:${mm}`;
+      li.appendChild(dateLabel);
+    }
+
+    if(t.repeat){
+      const label={weekly:'（毎週）',biweekly:'（2週間ごと）',monthly:'（毎月）'}[t.repeat];
+      const rep=document.createElement('span');
+      rep.className='repeat-label';rep.textContent=label;
+      li.appendChild(rep);
+    }
+
+    if(t.autoEndLabel){
+      const el=document.createElement('span');
+      el.className='date-label';
+      el.textContent=`終了日:${t.autoEndLabel}`;
+      li.appendChild(el);
+    }
+
+    const edit=document.createElement('button');
+    edit.textContent='編集';edit.className='muted';
+    edit.addEventListener('click',()=>{const v=prompt('編集してください',t.text);if(v!==null){t.text=v.trim();saveToLocalStorage();render();}});
+    const del=document.createElement('button');
+    del.textContent='削除';del.className='muted';
+    del.addEventListener('click',()=>{if(confirm('削除しますか？')){todos.splice(i,1);saveToLocalStorage();render();}});
+    
+    if(!shouldShowTask(t)){
+      li.style.opacity='0.5';
+      li.style.background='#f8f8f8';
+    }
+
+    li.prepend(chkMain,done,span);
+    li.append(edit,del);
+    listEl.appendChild(li);
+  });
+}
+
+    function addTodo(text,date,repeat,repeatCount,showFrom){
+      text=text.trim();if(!text)return;
+      const baseDate=new Date(date);
+      const repeatCountNum=Number(repeatCount)||0;
+      const autoEnd=new Date(baseDate);
+      const intervalDays=repeat==='weekly'?7:repeat==='biweekly'?14:repeat==='monthly'?30:0;
+      autoEnd.setDate(baseDate.getDate()+(repeatCountNum-1)*intervalDays);
+      const endStr=`${autoEnd.getMonth()+1}月${autoEnd.getDate()}日`;
+      todos.push({
+        text,done:false,createdAt:new Date().toISOString(),
+        date:date||null,repeat:repeat||'',
+        repeatCount:repeatCountNum,showFrom:Number(showFrom)||0,
+        autoEndLabel:endStr
+      });
+      generateRepeatingTasks();
+      saveToLocalStorage();render();
+    }
+
+function generateRepeatingTasks(){
+  const newTodos = [];
+  const seen = new Set();
+  todos.forEach(t => {
+    // 重複防止のため、text+date+repeatをキーに
+    const key = `${t.text}__${t.date}__${t.repeat}`;
+    seen.add(key);
+  });
+
+  todos.forEach(t => {
+    if(!t.repeat || !t.date) return;
+    let intervalDays = 0;
+    if(t.repeat === 'weekly') intervalDays = 7;
+    if(t.repeat === 'biweekly') intervalDays = 14;
+    const start = new Date(t.date);
+    const baseHour = start.getHours(), baseMinute = start.getMinutes(), baseSecond = start.getSeconds();
+    for(let i = 1; i < t.repeatCount; i++){
+      let d = new Date(start.getTime());
+      if(t.repeat === 'monthly'){
+        d.setMonth(start.getMonth() + i);
+      }else{
+        d.setDate(start.getDate() + i * intervalDays);
+      }
+      d.setHours(baseHour, baseMinute, baseSecond);
+      const dateStr = d.toISOString().slice(0,16);
+      const key = `${t.text}__${dateStr}__${t.repeat}`;
+      if(seen.has(key)) continue; // 既に追加済みならスキップ
+      seen.add(key);
+      newTodos.push({
+        text: t.text, done: false, createdAt: new Date().toISOString(),
+        date: dateStr, repeat: t.repeat, repeatCount: t.repeatCount,
+        showFrom: t.showFrom || 0, autoEndLabel: t.autoEndLabel
+      });
+    }
+  });
+  todos = todos.filter((t, i, arr) => {
+    // 重複排除（text+date+repeatが同じものは最初の1つだけ残す）
+    const key = `${t.text}__${t.date}__${t.repeat}`;
+    return arr.findIndex(x => `${x.text}__${x.date}__${x.repeat}` === key) === i;
+  }).concat(newTodos);
+}
+
+    addBtn.addEventListener('click',()=>{
+      addTodo(input.value,dateInput.value,repeatSelect.value,repeatCountInput.value,showFromInput.value);
+      input.value='';dateInput.value='';repeatSelect.value='';repeatCountInput.value='5';showFromInput.value='0';endLabel.textContent='';
+    });
+
+    // ✅ 一括削除機能
+    selectAll.addEventListener('change',()=>{
+      const checks=document.querySelectorAll('.select-task');
+      checks.forEach(c=>c.checked=selectAll.checked);
+    });
+
+    deleteSelected.addEventListener('click',()=>{
+      const checks=[...document.querySelectorAll('.select-task:checked')];
+      if(checks.length===0)return alert('削除するタスクを選んでください。');
+      if(!confirm(`${checks.length}件のタスクを削除しますか？`))return;
+      const indices=checks.map(c=>Number(c.dataset.index)).sort((a,b)=>b-a);
+      indices.forEach(i=>todos.splice(i,1));
+      saveToLocalStorage();render();
+    });
+
+    // ファイル保存
+    exportBtn.addEventListener('click',()=>{
+      if(todos.length===0)return alert('データがありません');
+      const blob=new Blob([JSON.stringify(todos,null,2)],{type:'application/json'});//これでMIMEタイプ指定
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=url;a.download='todos.json';a.click();//
+      URL.revokeObjectURL(url);
+    });
+    importBtn.addEventListener('click',()=>fileInput.click());//ファイルインポート
+    fileInput.addEventListener('change',async ev=>{
+      const f=ev.target.files[0];if(!f)return;
+      try{
+        const txt=await f.text();
+        const parsed=JSON.parse(txt);
+        if(!Array.isArray(parsed))throw new Error('配列ではありません');
+        if(confirm('追加しますか？キャンセルで上書きします。'))todos=todos.concat(parsed);else todos=parsed;
+        saveToLocalStorage();render();
+      }catch(err){alert('読み込み失敗:'+err.message);}
+      fileInput.value='';
+    });
+
+    saveFsaBtn.addEventListener('click',async()=>{
+      if(!('showSaveFilePicker'in window)){alert('このブラウザは非対応');return;}
+      try{
+        if(!fileHandle){
+          fileHandle=await window.showSaveFilePicker({suggestedName:'todos.json',types:[{description:'JSON',accept:{'application/json':['.json']}}]});
+        }
+        const writable=await fileHandle.createWritable();
+        await writable.write(JSON.stringify(todos,null,2));
+        await writable.close();alert('保存しました');
+      }catch(e){if(e.name!=='AbortError')console.error(e);}
+    });
+
+    loadFromLocalStorage();render();
+  </script>
+</body>
+</html>
