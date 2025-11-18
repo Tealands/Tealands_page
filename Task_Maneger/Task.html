@@ -54,8 +54,8 @@
         <option value="biweekly">2週間ごと</option>
         <option value="monthly">毎月</option>
       </select>
-      <input id="repeat-count" type="number" min="1" value="5" placeholder="繰り返し回数" style="max-width:120px;" />
-      <input id="show-from" type="number" min="0" value="0" placeholder="何日前から表示" style="max-width:110px;" />
+      <input id="repeat-count" type="number" min="0" value="0" placeholder="繰り返し回数" style="max-width:120px;" />
+      <input id="show-from" type="number" min="0" value="7" placeholder="何日前から表示" style="max-width:110px;" />
       <button id="add-btn">追加</button>
     </div>
 
@@ -235,8 +235,8 @@ function generateRepeatingTasks(){
   todos.forEach(t => {
     if(!t.repeat || !t.date) return;
     let intervalDays = 0;
-    if(t.repeat === 'weekly') intervalDays = 7;
-    if(t.repeat === 'biweekly') intervalDays = 14;
+    if(t.repeat === 'weekly') intervalDays = 6;
+    if(t.repeat === 'biweekly') intervalDays = 13;
     const start = new Date(t.date);
     const baseHour = start.getHours(), baseMinute = start.getMinutes(), baseSecond = start.getSeconds();
     for(let i = 1; i < t.repeatCount; i++){
