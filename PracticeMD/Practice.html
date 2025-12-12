@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>HTML内でMarkdown</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  body { font-family: sans-serif; }
+  #output { border: 1px solid #ccc; padding: 10px; }
+</style>
+</head>
+<body>
+
+<h2>Markdown入力</h2>
+<textarea id="md-input" rows="6" cols="50">
+# 見出し1
+- リスト1
+- リスト2
+**太字**
+</textarea>
+
+<h2>変換結果</h2>
+<div id="output"></div>
+
+<script>
+  const input = document.getElementById('md-input');
+  const output = document.getElementById('output');
+
+  function renderMarkdown() {
+    // Markdown → HTML に変換
+    output.innerHTML = marked.parse(input.value);
+  }
+
+  // 初期表示 & 入力イベント
+  renderMarkdown();
+  input.addEventListener('input', renderMarkdown);
+</script>
+
+</body>
+</html>
