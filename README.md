@@ -14,7 +14,7 @@ This is a repository for Tealands_page.
 - Minesweeper
 - LSPL
 これらの写真をまとめ、このREADMEにまとめる
-
+実行ファイルはセキュリティ上ダウンロードしてもらえないことが多いからweb上で動かせるものの方がいい
 
 # githubリポジトリ
 https://github.com/Tealands/LSPL 
