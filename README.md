@@ -16,5 +16,17 @@ This is a repository for Tealands_page.
 これらの写真をまとめ、このREADMEにまとめる
 実行ファイルはセキュリティ上ダウンロードしてもらえないことが多いからweb上で動かせるものの方がいい
 
+# 使用技術
+## 使用言語
+- html
+- javascript
+- css
+- react
+- 
+## 使用ツール
+- GitHub
+- Unity
+- VsCode
+  
 # githubリポジトリ
 https://github.com/Tealands/LSPL 
