@@ -7,6 +7,7 @@ This is a repository for Tealands_page.
 - 真ん中に出てくる消す広告
 - スクロール型広告
 - ロード画面
+- Taskmanegerの達成ボタンと未達成ボタンで達成率の表示
 
 # ポートフォリオ
 - MaximumQuiz
