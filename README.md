@@ -1,33 +1,16 @@
-# Tealands_page
-This is a repository for Tealands_page.
+# React + Vite
 
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-# 今後の追加予定
-- デザイン刷新
-- 真ん中に出てくる消す広告
-- スクロール型広告
-- ロード画面
-- Taskmanegerの達成ボタンと未達成ボタンで達成率の表示
+Currently, two official plugins are available:
 
-# ポートフォリオ
-- MaximumQuiz
-- TaskManeger
-- Minesweeper
-- LSPL
-これらの写真をまとめ、このREADMEにまとめる
-実行ファイルはセキュリティ上ダウンロードしてもらえないことが多いからweb上で動かせるものの方がいい
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-# 使用技術
-## 使用言語
-- html
-- javascript
-- css
-- react
-- 
-## 使用ツール
-- GitHub
-- Unity
-- VsCode
-  
-# githubリポジトリ
-https://github.com/Tealands/LSPL 
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

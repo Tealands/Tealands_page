@@ -1,66 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
-<head>
-  <link rel="icon" href="./keep_out/Game_Developing.png" type="image/x-icon">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>しげるのページ</title>
-	<style>
-		:root{--bg:#f6f8fb;--card:#fff;--accent:#2b90ff;--muted:#6b7280}
-		html,body{height:100%;margin:0;font-family:Yu Gothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;background:var(--bg);color:#111}
-		.wrap{max-width:880px;margin:48px auto;padding:24px}
-		header{display:flex;align-items:center;gap:18px}
-		h1{margin:0;font-size:2rem}
-		.card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(12,20,30,0.06)}
-		a{color:var(--accent);text-decoration:none}
-		a:hover{text-decoration:underline}
-		ul{padding-left:1.1rem}
-		footer{margin-top:28px;color:var(--muted);font-size:0.9rem}
-	</style>
-</head>
-<body>
-	<div class="wrap">
-		<header>
-			<div>
-				<h1>しげるのページ</h1>
-				<p style="margin:6px 0;color:var(--muted)">個人のポートフォリオと作品集</p>
-			</div>
-		</header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio</title>
+    <link rel="icon" href="/keep_out/Shiger.jpg" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="/keep_out/Shiger.jpg" />
+  </head>
+  <body>
+    <div id="root"></div>
 
-		<main style="margin-top:24px;display:flex;flex-direction:column;gap:18px">
-      <section class="card">
-        <h2 style="margin-top:0">自己紹介</h2>
-        <p>埼玉大学工学部情報工学科に所属する学生、しげるです。Maximumというプログラミングサークルに所属し、webやUnityの勉強をしています。GitHubを用いた共同開発も行っています。</p>
-      </section>
-
-			<section class="card">
-				<h2 style="margin-top:0">ポートフォリオ</h2>
-				<p style="color:var(--muted);margin-bottom:12px">以下はこのリポジトリに含まれる代表的な作品です。リンクをクリックして各ページを開いてください。</p>
-				<ul> 
-          <p2>個人で作った作品</p2>
-          <li><a href="PracticeMD/Practice.html">PracticeMD</a> — HTML内でMarkdownをレンダリングするデモページ（PracticeMD フォルダ）</li>
-					<li><a href="move_stone/move_stone.html">Move Stone</a> — ゲーム風の石移動デモ（move_stone フォルダ）</li>
-					<li><a href="Task_Maneger/Task.html">Task Maneger</a> — タスク管理のデモページ（Task_Maneger フォルダ）</li>
-          <p2>チームで開発した作品</p2>
-          <li><a href="https://quiz.game.teams.maximum.vc/">Maximum Quiz</a> サークル生用クイズサイト</li>
-        </ul>
-
-			</section>
-
-			<section class="card" style="margin-top:14px">
-				<h3 style="margin-top:0">プロジェクトについて</h3>
-				<p style="margin:0;color:var(--muted)">詳細は各ディレクトリ内のファイルを参照してください。開発中のサーバやソースコードも同梱しています。</p>
-			</section>
-		</main>
-
-		<footer>
-			<div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-				<span>© しげる</span>
-				<nav style="font-size:0.95rem;color:var(--muted)">
-				</nav>
-			</div>
-		</footer>
-	</div>
-</body>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
-
