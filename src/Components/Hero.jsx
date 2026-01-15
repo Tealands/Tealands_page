@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SocialIcons from './SocialIcons';
+import ActionButtons from './ActionButtons';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Hero = () => {
           ここは<span className="text-white/90">[しげるのぺージ]</span>
         </h1>
         <p className="text-xl md:text-2xl text-white/80 font-light">
-          Software Developer & Creator
+          Software Developer & Game Creator
         </p>
       </div>
 
@@ -30,21 +31,7 @@ const Hero = () => {
       </p>
 
       {/* アクションボタン */}
-      <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
-        {/* メインボタン：夕焼けの反対色である鮮やかな青系で目立たせる */}
-        <button
-          className="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold shadow-2xl transition-all active:scale-95 flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-          Get in Touch
-        </button>
-        
-        {/* サブボタン：白の半透明（グラスモーフィズム） */}
-        <button className="px-8 py-3.5 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 text-white rounded-xl font-semibold transition-all flex items-center gap-2">
-          View Projects
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-        </button>
-      </div>
+      <ActionButtons />
 
       <div className="pt-12">
         <SocialIcons />

@@ -1,9 +1,9 @@
 import React from 'react';
-import { GitHub, X, Mail } from 'lucide-react';
+import { Github, X, Mail } from 'lucide-react';
 
 const SocialIcons = () => {
   const icons = [
-    { icon: <GitHub size={24} />, href: "#", label: "GitHub" },
+    { icon: <Github size={24} />, href: "#", label: "GitHub" },
     { icon: <X size={24} />, href: "#", label: "X" },
     { icon: <Mail size={24} />, href: "#", label: "Email" },
   ];

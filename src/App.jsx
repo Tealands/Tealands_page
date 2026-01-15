@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import Hero from './Components/Hero';
 import Repositories from './Components/Repositories';
@@ -15,6 +15,7 @@ function Home() {
       <main className="relative z-10 w-full max-w-4xl mx-auto py-12">
         {/* ここにホームの他のコンテンツを追加できます */}
       </main>
+
     </div>
   );
 }
@@ -56,16 +57,23 @@ function RelatedPage() {
   );
 }
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/repositories",
+    element: <RepositoriesPage />,
+  },
+  {
+    path: "/related",
+    element: <RelatedPage />,
+  },
+]);
+
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/repositories" element={<RepositoriesPage />} />
-        <Route path="/related" element={<RelatedPage />} />
-      </Routes>
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
