@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = ({ title, subtitle, children }) => {
+const HeaderPicture = ({ title, subtitle, children }) => {
   return (
     <header
       className="w-full h-[60vh] md:h-[75vh] bg-gradient-to-br from-blue-900 to-purple-900 relative"
