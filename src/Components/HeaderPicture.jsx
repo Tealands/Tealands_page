@@ -25,4 +25,4 @@ const HeaderPicture = ({ title, subtitle, children }) => {
   );
 };
 
-export default Header;
+export default HeaderPicture;

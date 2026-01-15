@@ -3,14 +3,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import Hero from './Components/Hero';
 import Repositories from './Components/Repositories';
-import Header from './Components/Header';
+import HeaderPicture from './Components/HeaderPicture';
 
 function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center p-4 relative bg-gray-900">
-      <Header>
+      <HeaderPicture>
         <Hero />
-      </Header>
+      </HeaderPicture>
 
       <main className="relative z-10 w-full max-w-4xl mx-auto py-12">
         {/* ここにホームの他のコンテンツを追加できます */}
@@ -23,7 +23,7 @@ function Home() {
 function RepositoriesPage() {
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col">
-      <Header title="Repositories" subtitle="My projects and contributions" />
+      <HeaderPicture title="Repositories" subtitle="My projects and contributions" />
       <div className="flex-1 py-12">
         <Repositories />
       </div>
@@ -34,7 +34,7 @@ function RepositoriesPage() {
 function RelatedPage() {
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col">
-      <Header title="Related Sites" subtitle="Explore related content" />
+      <HeaderPicture title="Related Sites" subtitle="Explore related content" />
       <div className="flex-1 py-12">
         <div className="w-full max-w-4xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-white mb-6">Related Links</h2>
