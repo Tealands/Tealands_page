@@ -5,7 +5,7 @@ const Header = ({ title, subtitle, children }) => {
     <header
       className="w-full h-[60vh] md:h-[75vh] bg-cover bg-center relative"
       style={{
-        backgroundImage: `url('../../keep_out/BackScreen.jpg')`,
+        backgroundImage: `url('/keep_out/BackScreen.jpg')`,
       }}
     >
       <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
