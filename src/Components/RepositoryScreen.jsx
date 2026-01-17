@@ -1,10 +1,15 @@
 import React from 'react';
+import HeaderPicture from './HeaderPicture.jsx';
+import Repositories from './Repositories.jsx';
 
 const RepositoryScreen = () => {
     return (
-        <div className="text-white p-8">
-            <h1 className="text-4xl font-bold mb-4">リポジトリ</h1>
-            <p className="text-lg">ここにリポジトリ一覧が入ります。</p>
+        <div className="min-h-screen bg-gray-900 text-white">
+            <HeaderPicture title="Repositories" />
+            {/* 必要に応じて共通ヘッダーなどをここに追加 */}
+            <div className="p-8 max-w-4xl mx-auto">
+                <Repositories />
+            </div>
         </div>
     );
 };

@@ -3,28 +3,28 @@ import { ScreenContext } from './ScreenContext';
 import App from '../App.jsx';
 import Banners from './Banners.jsx';
 import HeaderPicture from './HeaderPicture.jsx';
-import SelfIntroductionScreen from './SelfIntroductionScreen.jsx';
+import RelatedPageScreen from './RelatedPageScreen.jsx';
 import RepositoryScreen from './RepositoryScreen.jsx';
 
+{/*ここで画面遷移を管理します。*/ }
 const ScreenManager = () => {
-    console.log("ScreenManager rendered");
     const [currentScreen, setCurrentScreen] = useState('TITLE');
 
     const openTitleScreen = () => setCurrentScreen('TITLE');
-    const openSelfIntroductionScreen = () => setCurrentScreen('SELF_INTRO');
+    const openRelatedPageScreen = () => setCurrentScreen('RelatedPage');
     const openRepositoryScreen = () => setCurrentScreen('REPOSITORY');
 
     // Expose functions globally for calling from console or other non-react parts if needed,
     // or just to fulfill the "prepare functions" requirement visibly.
     useEffect(() => {
         window.openTitleScreen = openTitleScreen;
-        window.openSelfIntroductionScreen = openSelfIntroductionScreen;
+        window.openSelfIntroductionScreen = openRelatedPageScreen;
         window.openRepositoryScreen = openRepositoryScreen;
 
         // Cleanup
         return () => {
             delete window.openTitleScreen;
-            delete window.openSelfIntroductionScreen;
+            delete window.openRelatedPageScreen;
             delete window.openRepositoryScreen;
         };
     }, []);
@@ -50,11 +50,11 @@ const ScreenManager = () => {
                         </div>
                     </div>
                 );
-            case 'SELF_INTRO':
+            case 'RelatedPage':
                 return (
                     <div className="min-h-screen bg-gray-900">
                         {/* 必要に応じて共通ヘッダーなどをここに追加 */}
-                        <SelfIntroductionScreen />
+                        <RelatedPageScreen />
                         {/* テスト用の戻るボタン */}
                         <button
                             onClick={openTitleScreen}
@@ -83,7 +83,7 @@ const ScreenManager = () => {
     };
 
     return (
-        <ScreenContext.Provider value={{ openTitleScreen, openSelfIntroductionScreen, openRepositoryScreen }}>
+        <ScreenContext.Provider value={{ openTitleScreen, openRelatedPageScreen, openRepositoryScreen }}>
             {renderScreen()}
         </ScreenContext.Provider>
     );

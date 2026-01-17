@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<link rel="icon" href="../../src/assets/Game_Developing.png" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正解したときのページ</title>
+<style>
+header {
+    padding: 20px;
+    text-align: center;
+    background-color: #75d0e9;
+}
+body {
+    background-color: rgb(15, 177, 213);
+    color: rgb(65, 200, 67);
+    font-family: Arial, sans-serif;
+    margin: 18px;
+    padding: 18px;
+    text-align: center;
+}
+button {
+    padding: 10px 20px;
+    font-size: 20px;
+    margin: 5px;
+    background-color: rgb(255, 255, 255);
+    color:  rgb(65, 200, 67);
+}
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+    <img src="https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/8123/production/_126795033_forbbconly.jpg" 
+         alt="エリザベス女王の写真" 
+         class="">
+    <h1>Congratulation!</h1>
+    <ul id="links" style="display:none;">
+        <a href="../../index.html">しげるのページに戻る</a>
+    </ul>
+    <ul id="links2" style="display:none;">
+        <a href="NumberPlace.html">もう一度数独をプレイ</a>
+    </ul>
+    <button id="nextButton" onclick="playAudio()">次へ</button>
+    <audio id="audioPlayer" src="../../assets/rule_britannia.mp3" style="display:none;"></audio>
+   
+    <script>
+        function playAudio() {
+            var audio = document.getElementById('audioPlayer');
+            audio.play();
+            document.getElementById('links').style.display = "block";
+            document.getElementById('links2').style.display = "block";
+            document.getElementById('nextButton').style.display = "none"; // 次へのボタンを非表示にする
+        }
+
+        // Enterキーで次の問題へ進む処理を追加
+        document.getElementById('answerInput')?.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+                setTimeout(generateQuestion, 500); // 答え合わせ後0.5秒待って次の問題を生成
+            }
+        });
+
+        function checkAnswer() {
+            console.log('答えをチェックしています...');
+            // ここに答え合わせロジックを追加
+        }
+
+        function generateQuestion() {
+            console.log('新しい問題を生成しています...');
+            // ここに次の問題を生成するロジックを追加
+        }
+    </script>
+</body>
+</html>
