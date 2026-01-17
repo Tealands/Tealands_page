@@ -33,7 +33,19 @@ const RelatedPageScreen = () => {
                             <span className="text-gray-400">Maximumは私が所属するプログラミングサークルで、<br></br>
                                 競技プログラミングやwebを使った開発を行います。</span>
                         </li>
-
+                        <li>
+                            <a
+                                href="https://x.com/Maximum03400346"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 hover:text-blue-300 underline text-xl"
+                            >
+                                MaximumのX（旧Twitter）
+                            </a>
+                            <br></br>
+                            <span className="text-gray-400">Maximumの公式Xアカウントです。<br></br>
+                                サークルの活動内容やイベント情報などを発信しています。</span>
+                        </li>
                     </ul>
                 </div>
             </div>
