@@ -9,6 +9,18 @@ const RepositoriesScreen = () => {
                     <ul className="space-y-4">
                         <li>
                             <a
+                                href="https://tealands.github.io/NumberPlace/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 hover:text-blue-300 underline text-xl"
+                            >
+                                Number Place
+                            </a>
+                            <br></br>
+                            <span className="text-gray-400">ナンプレ（数独）ゲームです。クリアすると...</span>
+                        </li>                        
+                        <li>
+                            <a
                                 href="https://quiz.game.teams.maximum.vc/"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -21,7 +33,7 @@ const RepositoriesScreen = () => {
                         </li>
                         <li>
                             <a
-                                href="Repositries/Task_Maneger/Task.html"
+                                href="https://tealands.github.io/SortTodo/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-400 hover:text-blue-300 underline text-xl"
@@ -32,18 +44,7 @@ const RepositoriesScreen = () => {
                             <span className="text-gray-400">私が個人で開発したソート機能付きTodoサイトです。<br></br>
                                 ローカルファイルにデータを保存し、そこからデータを復元することもできます。</span>
                         </li>
-                        <li>
-                            <a
-                                href="/Repositories/NumberPlace/NumberPlace.html"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-400 hover:text-blue-300 underline text-xl"
-                            >
-                                Number Place
-                            </a>
-                            <br></br>
-                            <span className="text-gray-400">ナンプレ（数独）ゲームです。クリアすると...</span>
-                        </li>
+                        <h3>上から入学1年目後期、2年目前期、2年目後期に開発したものです</h3>
 
                     </ul>
                 </div>

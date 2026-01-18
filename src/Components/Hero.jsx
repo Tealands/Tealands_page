@@ -1,11 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import SocialIcons from './SocialIcons';
 import ActionButtons from './ActionButtons';
 import snowManIcon from '../assets/SnowMan1.png';
 
 const Hero = () => {
-  const navigate = useNavigate();
+
 
   return (
     <div className="flex flex-col items-center text-center space-y-8">
@@ -27,9 +27,9 @@ const Hero = () => {
 
       {/*アイコン画像*/}
       <div className="relative">
-        <img 
-          src={snowManIcon} 
-          alt="Shiger Icon" 
+        <img
+          src={snowManIcon}
+          alt="Shiger Icon"
           className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white/20 shadow-xl"
         />
       </div>
