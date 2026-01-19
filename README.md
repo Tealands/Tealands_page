@@ -24,3 +24,5 @@ If you are developing a production application, we recommend using TypeScript wi
 - 書いたnote記事のリンク
 - オリジナル問題集ページ
 - MFSの画像修正
+- 趣味で書いた企画書一覧
+- Learn more page(使える言語とツール、好きなゲーム、活動実績(Maximum,SPG,予備自衛官補,Youthbaddy))
