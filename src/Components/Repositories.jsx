@@ -1,7 +1,48 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import { ScreenContext } from './ScreenContext';
 
 const RepositoriesScreen = () => {
+    const { language } = useContext(ScreenContext);
+
+    const getText = (key) => {
+        const texts = {
+            ja: {
+                numberPlaceDesc: 'ナンプレ（数独）ゲームです。クリアすると...',
+                maximumQuizDesc: '私たちがチームで開発したプログラミングに関するクイズサイトです。',
+                sortTodoDesc: '私が個人で開発したソート機能付きTodoサイトです。ローカルファイルにデータを保存し、そこからデータを復元することもできます。',
+                note: '上から入学1年目後期、2年目前期、2年目後期に開発したものです',
+                skillsTitle: 'スキル',
+                language: '使った言語',
+                purpose: '用途',
+                proficiency: 'どれくらい使えるか'
+            },
+            en: {
+                numberPlaceDesc: 'This is a Number Place (Sudoku) game. When you clear it...',
+                maximumQuizDesc: 'This is a quiz site about programming that we developed as a team.',
+                sortTodoDesc: 'This is a Todo site with sorting functionality that I developed personally. It saves data to a local file and can also restore data from there.',
+                note: 'From top to bottom, developed in the second semester of freshman year, first semester of sophomore year, and second semester of sophomore year.',
+                skillsTitle: 'Skills',
+                language: 'Language',
+                purpose: 'Purpose',
+                proficiency: 'Proficiency'
+            }
+        };
+        return texts[language][key];
+    };
+
+    const skillsData = [
+        { lang: 'C', purpose: language === 'ja' ? '大学の授業' : 'University courses', prof: '〇' },
+        { lang: 'C++', purpose: language === 'ja' ? '競技プログラミング' : 'Competitive programming', prof: '△' },
+        { lang: 'C#', purpose: 'Unity', prof: '△' },
+        { lang: 'Java', purpose: language === 'ja' ? '大学の授業' : 'University courses', prof: '△' },
+        { lang: 'React(js,ts)', purpose: language === 'ja' ? 'webサイト' : 'Website', prof: '〇' },
+        { lang: 'Python', purpose: language === 'ja' ? '大学の授業' : 'University courses', prof: '△' },
+        { lang: 'SQL', purpose: language === 'ja' ? 'データベース' : 'Database', prof: '△' },
+        { lang: 'HTML', purpose: language === 'ja' ? 'webサイト' : 'Website', prof: '〇' },
+        { lang: 'MarkDown', purpose: language === 'ja' ? 'メモ' : 'Notes', prof: '〇' },
+        { lang: 'CSS', purpose: language === 'ja' ? 'webサイト' : 'Website', prof: '△' }
+    ];
+
     return (
         <>
             <div className="flex-1 py-12">
@@ -17,7 +58,7 @@ const RepositoriesScreen = () => {
                                 Number Place
                             </a>                            
                             <br></br>
-                            <span className="text-gray-400">ナンプレ（数独）ゲームです。クリアすると...</span>
+                            <span className="text-gray-400">{getText('numberPlaceDesc')}</span>
                         </li>                        
                         <li>
                             <a
@@ -29,7 +70,7 @@ const RepositoriesScreen = () => {
                                 Maximum Quiz
                             </a>
                             <br></br>
-                            <span className="text-gray-400">私たちがチームで開発したプログラミングに関するクイズサイトです。</span>
+                            <span className="text-gray-400">{getText('maximumQuizDesc')}</span>
                         </li>
                         <li>
                             <a
@@ -38,15 +79,40 @@ const RepositoriesScreen = () => {
                                 rel="noopener noreferrer"
                                 className="text-blue-400 hover:text-blue-300 underline text-xl"
                             >
-                                ソート付きTodo
+                                {language === 'ja' ? 'ソート付きTodo' : 'Sorted Todo'}
                             </a>
                             <br></br>
-                            <span className="text-gray-400">私が個人で開発したソート機能付きTodoサイトです。<br></br>
-                                ローカルファイルにデータを保存し、そこからデータを復元することもできます。</span>
+                            <span className="text-gray-400">{getText('sortTodoDesc')}</span>
                         </li>
-                        <h3>上から入学1年目後期、2年目前期、2年目後期に開発したものです</h3>
+                        <h3>{getText('note')}</h3>
+                        
 
                     </ul>
+
+                    {/* スキル表 */}
+                    <div className="mt-12">
+                        <h2 className="text-2xl font-bold text-white mb-4">{getText('skillsTitle')}</h2>
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full bg-white/10 backdrop-blur-md rounded-lg border border-white/20">
+                                <thead>
+                                    <tr className="bg-white/20">
+                                        <th className="px-4 py-2 text-center text-white font-semibold">{getText('language')}</th>
+                                        <th className="px-4 py-2 text-center text-white font-semibold">{getText('purpose')}</th>
+                                        <th className="px-4 py-2 text-center text-white font-semibold">{getText('proficiency')}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {skillsData.map((skill, index) => (
+                                        <tr key={index} className="border-t border-white/2">{/*ここで横線の太さを変更*/}
+                                            <td className="px-4 py-2 text-white">{skill.lang}</td>
+                                            <td className="px-4 py-2 text-white">{skill.purpose}</td>
+                                            <td className="px-4 py-2 text-white">{skill.prof}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

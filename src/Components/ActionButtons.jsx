@@ -3,7 +3,21 @@ import { ScreenContext } from './ScreenContext';
 
 const ActionButtons = () => {
   const context = useContext(ScreenContext);
-  const { openRelatedPageScreen, openRepositoryScreen } = context || {};
+  const { openRelatedPageScreen, openRepositoryScreen, language } = context || {};
+
+  const getText = (key) => {
+    const texts = {
+      ja: {
+        relatedSites: '関連サイト',
+        viewRepositories: 'リポジトリを見る'
+      },
+      en: {
+        relatedSites: 'Related Sites',
+        viewRepositories: 'View Repositories'
+      }
+    };
+    return texts[language][key];
+  };
 
   return (
     <div className="flex flex-col items-center gap-4 pt-4">
@@ -14,7 +28,7 @@ const ActionButtons = () => {
         }}
         className="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold shadow-2xl transition-all active:scale-95 flex items-center justify-center"
       >
-        Related Sites
+        {getText('relatedSites')}
         <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>
@@ -27,7 +41,7 @@ const ActionButtons = () => {
         }}
         className="px-8 py-3.5 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 text-white rounded-xl font-semibold transition-all flex items-center gap-2"
       >
-        View Repositories
+        {getText('viewRepositories')}
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>
