@@ -15,7 +15,7 @@ const RepositoriesScreen = () => {
                                 className="text-blue-400 hover:text-blue-300 underline text-xl"
                             >
                                 Number Place
-                            </a>
+                            </a>                            
                             <br></br>
                             <span className="text-gray-400">ナンプレ（数独）ゲームです。クリアすると...</span>
                         </li>                        

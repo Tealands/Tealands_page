@@ -19,4 +19,8 @@ If you are developing a production application, we recommend using TypeScript wi
 ## 今後の開発予定
 - トップページのヘッダー画像にかぶせて[welcome]を入力するアニメーションコンポーネントの追加
 - 英語モードの追加
+- 昼夜でヘッダー画像が切り替わるように
 - Youth Baddyのアカウント
+- 書いたnote記事のリンク
+- オリジナル問題集ページ
+- MFSの画像修正
