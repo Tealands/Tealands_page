@@ -11,26 +11,28 @@ const RepositoriesScreen = () => {
                 maximumQuizDesc: '私たちがチームで開発したプログラミングに関するクイズサイトです。',
                 sortTodoDesc: '私が個人で開発したソート機能付きTodoサイトです。ローカルファイルにデータを保存し、そこからデータを復元することもできます。',
                 note: '上から入学1年目後期、2年目前期、2年目後期に開発したものです',
-                skillsTitle: 'スキル',
+                skillsTitle1: 'プログラミング言語スキル',
                 language: '使った言語',
                 purpose: '用途',
-                proficiency: 'どれくらい使えるか'
+                proficiency: 'どれくらい使えるか',
+                skillsTitle2: 'プログラミングツールスキル',
             },
             en: {
                 numberPlaceDesc: 'This is a Number Place (Sudoku) game. When you clear it...',
                 maximumQuizDesc: 'This is a quiz site about programming that we developed as a team.',
                 sortTodoDesc: 'This is a Todo site with sorting functionality that I developed personally. It saves data to a local file and can also restore data from there.',
                 note: 'From top to bottom, developed in the second semester of freshman year, first semester of sophomore year, and second semester of sophomore year.',
-                skillsTitle: 'Skills',
+                skillsTitle1: 'Programming Language Skills',
                 language: 'Language',
                 purpose: 'Purpose',
-                proficiency: 'Proficiency'
+                proficiency: 'Proficiency',
+                skillsTitle2: 'Programming Tools Skills',
             }
         };
         return texts[language][key];
     };
 
-    const skillsData = [
+    const skillsData1 = [
         { lang: 'C', purpose: language === 'ja' ? '大学の授業' : 'University courses', prof: '〇' },
         { lang: 'C++', purpose: language === 'ja' ? '競技プログラミング' : 'Competitive programming', prof: '△' },
         { lang: 'C#', purpose: 'Unity', prof: '△' },
@@ -41,6 +43,12 @@ const RepositoriesScreen = () => {
         { lang: 'HTML', purpose: language === 'ja' ? 'webサイト' : 'Website', prof: '〇' },
         { lang: 'MarkDown', purpose: language === 'ja' ? 'メモ' : 'Notes', prof: '〇' },
         { lang: 'CSS', purpose: language === 'ja' ? 'webサイト' : 'Website', prof: '△' }
+    ];
+
+    const skillsData2 = [
+        { tool: 'VScode', purpose: language === 'ja' ? 'プログラミング全般' : 'General programming', prof: '◎' },
+        { tool: 'GitHub', purpose: language === 'ja' ? 'Webサイト・ゲーム開発' : 'Website and game development', prof: '〇' },
+        { tool: 'Unity', purpose: language === 'ja' ? 'ゲーム開発' : 'Game development', prof: '△' }
     ];
 
     return (
@@ -89,7 +97,7 @@ const RepositoriesScreen = () => {
 
                     </ul>
 
-                    {/* スキル表 */}
+                    {/* 言語スキル表 */}
                     <div className="mt-12">
                         <h2 className="text-2xl font-bold text-white mb-4">{getText('skillsTitle')}</h2>
                         <div className="overflow-x-auto">
@@ -102,7 +110,7 @@ const RepositoriesScreen = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {skillsData.map((skill, index) => (
+                                    {skillsData1.map((skill, index) => (
                                         <tr key={index} className="border-t border-white/2">{/*ここで横線の太さを変更*/}
                                             <td className="px-4 py-2 text-white">{skill.lang}</td>
                                             <td className="px-4 py-2 text-white">{skill.purpose}</td>
