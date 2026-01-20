@@ -6,7 +6,7 @@ const SocialIcons = () => {
     { icon: <Github size={24} />, href: "https://github.com/Tealands", label: "GitHub" },
     { icon: <X size={24} />, href: "https://x.com/yeah_hi0525", label: "X" },
     { icon: <Instagram size={24} />, href: "https://www.instagram.com/catapult0525shiger/", label: "Instagram" },
-    { icon: <Youtube size={24} />, href: "https://www.youtube.com/channel/UCkm6Z3ZjDEJBW0R_XNRzHug", label: "YouTube" }
+    { icon: <Youtube size={24} />, href: "https://www.youtube.com/@%E3%81%97%E3%81%92%E3%82%8B%E3%81%AE%E3%83%81%E3%83%A3%E3%83%B3%E3%83%8D%E3%83%AB", label: "YouTube" }
   ];
 
   return (
