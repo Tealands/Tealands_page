@@ -8,6 +8,7 @@ const RepositoriesScreen = () => {
         const texts = {
             ja: {
                 numberPlaceDesc: 'ナンプレ（数独）ゲームです。クリアすると...',
+                moveStoneDesc: '石を動かすゲームです。クリアすると...',
                 maximumQuizDesc: '私たちがチームで開発したプログラミングに関するクイズサイトです。',
                 sortTodoDesc: '私が個人で開発したソート機能付きTodoサイトです。ローカルファイルにデータを保存し、そこからデータを復元することもできます。',
                 note: '上から入学1年目後期、2年目前期、2年目後期に開発したものです',
@@ -19,6 +20,7 @@ const RepositoriesScreen = () => {
             },
             en: {
                 numberPlaceDesc: 'This is a Number Place (Sudoku) game. When you clear it...',
+                moveStoneDesc: 'This is a game where you move stones. When you win...',
                 maximumQuizDesc: 'This is a quiz site about programming that we developed as a team.',
                 sortTodoDesc: 'This is a Todo site with sorting functionality that I developed personally. It saves data to a local file and can also restore data from there.',
                 note: 'From top to bottom, developed in the second semester of freshman year, first semester of sophomore year, and second semester of sophomore year.',
@@ -58,7 +60,7 @@ const RepositoriesScreen = () => {
                     <ul className="space-y-4">
                         <li>
                             <a
-                                href="https://tealands.github.io/NumberPlace/"
+                                href="https://tealands.github.io/ShigersGame/NumberPlace.html"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-400 hover:text-blue-300 underline text-xl"
@@ -67,7 +69,19 @@ const RepositoriesScreen = () => {
                             </a>                            
                             <br></br>
                             <span className="text-gray-400">{getText('numberPlaceDesc')}</span>
-                        </li>                        
+                        </li>      
+                        <li>
+                            <a
+                                href="https://tealands.github.io/ShigersGame/move_stone.html"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 hover:text-blue-300 underline text-xl"
+                            >
+                                Move Stone
+                            </a>                            
+                            <br></br>
+                            <span className="text-gray-400">{getText('numberPlaceDesc')}</span>
+                        </li>                                            
                         <li>
                             <a
                                 href="https://quiz.game.teams.maximum.vc/"
