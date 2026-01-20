@@ -1,20 +1,39 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 // 1. 画像をインポートします。パスはご自身のプロジェクト構成に合わせて調整してください。
 // 例: このコンポーネントが src/Components/ にあり、画像が src/assets/ にある場合
-import backScreenImage from '../assets/BackScreen.jpg';
+import backScreen1 from '../assets/BackScreen1.JPG';
+import backScreen2 from '../assets/BackScreen2.JPG';
+import backScreen3 from '../assets/BackScreen3.JPG';
 import { ScreenContext } from './ScreenContext';
 
 const HeaderPicture = ({ title, subtitle, children }) => {
   const { language, toggleLanguage } = useContext(ScreenContext);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  return (
-    <header
-      // 2. classNameを変更します。
-      // グラデーション(bg-gradient-...)を削除し、画像の配置設定を追加します。
-      className="w-full h-[60vh] md:h-[75vh] relative bg-cover bg-center bg-no-repeat"
-      // 3. style属性で背景画像を設定します。
-      style={{ backgroundImage: `url(${backScreenImage})` }}
-    >
+  const images = [backScreen1, backScreen2, backScreen3];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 60000); // 1分ごとに切り替え
+
+  return () => clearInterval(interval);
+}, [images.length]);
+
+const [fade, setFade] = useState(true);
+
+return (
+    <header className="w-full h-[60vh] md:h-[75vh] relative overflow-hidden">
+      {images.map((image, index) => (
+        <img
+          key={index}
+          src={image}
+          alt={`Background ${index + 1}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+            index === currentImageIndex ? (fade ? 'opacity-100' : 'opacity-0') : 'opacity-0'
+          }`}
+        />
+      ))}
       <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
       {/* 言語切り替えボタン */}
       <div className="absolute top-4 right-4 z-20">

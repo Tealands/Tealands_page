@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import HeaderPicture from './HeaderPicture.jsx';
 import { ScreenContext } from './ScreenContext';
 
 const RelatedPageScreen = () => {
@@ -39,7 +38,16 @@ const RelatedPageScreen = () => {
 
     return (
         <div className="min-h-screen bg-gray-900">
-            <HeaderPicture title={title} />
+            <div className="w-full h-[60vh] md:h-[75vh] relative bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+                <div className="relative z-10 flex items-center justify-center h-full text-center px-4">
+                    <div className="space-y-4">
+                        <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight drop-shadow-lg">
+                            {title}
+                        </h1>
+                    </div>
+                </div>
+            </div>
             <div className="flex-1 py-12">
                 <div className="w-full max-w-4xl mx-auto px-4">
                     <ul className="space-y-4">

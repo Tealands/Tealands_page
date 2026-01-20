@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { ScreenContext } from './ScreenContext';
-import App from '../App.jsx';
-import Banners from './Banners.jsx';
-import HeaderPicture from './HeaderPicture.jsx';
-import RelatedPageScreen from './RelatedPageScreen.jsx';
-import RepositoryScreen from './RepositoryScreen.jsx';
+import { ScreenContext } from './Components/ScreenContext';
+import App from './App.jsx';
+import Banners from './Components/Banners.jsx';
+import Hero from './Components/Hero';
+import RelatedPageScreen from './Components/RelatedPageScreen.jsx';
+import RepositoryScreen from './Components/RepositoryScreen.jsx';
+import TypingAnimation from './Components/Animetion';
+import HeaderPicture from './Components/HeaderPicture.jsx';
+
 
 {/*ここで画面遷移を管理します。*/ }
 const ScreenManager = () => {
@@ -38,7 +41,13 @@ const ScreenManager = () => {
                 return (
                     <div className="min-h-screen bg-gray-900">
                         {/* ここでタイトルやサブタイトルを渡します */}
-                        <HeaderPicture />
+                        <div className="relative">
+                            <HeaderPicture />
+                            {/* アニメーションをヘッダー画像にかぶせる */}
+                            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20">
+                                <TypingAnimation />
+                            </div>
+                        </div>
                         <div className="p-4">
                             <div className="flex flex-col md:flex-row gap-8 max-w-[1600px] mx-auto">
                                 <div className="flex-1">

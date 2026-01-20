@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import HeaderPicture from './HeaderPicture.jsx';
 import Repositories from './Repositories.jsx';
 import { ScreenContext } from './ScreenContext';
 import GeminiImg from '../assets/Gemini.png';
@@ -40,7 +39,16 @@ const RepositoryScreen = () => {
 
     return (
         <div className="min-h-screen bg-gray-900 text-white">
-            <HeaderPicture title={title} />
+            <div className="w-full h-[60vh] md:h-[75vh] relative bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+                <div className="relative z-10 flex items-center justify-center h-full text-center px-4">
+                    <div className="space-y-4">
+                        <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight drop-shadow-lg">
+                            {title}
+                        </h1>
+                    </div>
+                </div>
+            </div>
             {/* 必要に応じて共通ヘッダーなどをここに追加 */}
             <div className="p-8 max-w-4xl mx-auto">
                 <Repositories />
