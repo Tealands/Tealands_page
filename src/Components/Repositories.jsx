@@ -72,7 +72,7 @@ const RepositoriesScreen = () => {
                         </li>      
                         <li>
                             <a
-                                href="https://tealands.github.io/ShigersGame/move_stone.html"
+                                href="https://tealands.github.io/ShigersGame/MoveStone.html"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-400 hover:text-blue-300 underline text-xl"
