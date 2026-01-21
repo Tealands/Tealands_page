@@ -16,3 +16,4 @@ export default defineConfig({
   },
   publicDir: 'src', // srcディレクトリをビルド時にコピー
 })
+
