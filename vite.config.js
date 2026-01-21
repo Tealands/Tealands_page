@@ -14,4 +14,5 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: false,
   },
+  publicDir: 'src', // srcディレクトリをビルド時にコピー
 })
