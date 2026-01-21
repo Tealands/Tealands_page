@@ -80,7 +80,7 @@ const RepositoriesScreen = () => {
                                 Move Stone
                             </a>                            
                             <br></br>
-                            <span className="text-gray-400">{getText('numberPlaceDesc')}</span>
+                            <span className="text-gray-400">{getText('moveStoneDesc')}</span>
                         </li>                                            
                         <li>
                             <a

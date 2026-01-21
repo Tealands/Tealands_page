@@ -21,7 +21,7 @@ const RepositoryScreen = () => {
                 codingSupportedBy: 'Coding Supported by'
             },
             en: {
-                toolsTitle: 'Tools Used',
+                toolsTitle: 'Tools I Used',
                 tool: 'Tool',
                 purpose: 'Purpose',
                 proficiency: 'Proficiency',
