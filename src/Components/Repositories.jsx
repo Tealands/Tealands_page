@@ -11,6 +11,7 @@ const RepositoriesScreen = () => {
                 moveStoneDesc: '石を動かすゲームです。クリアすると...',
                 maximumQuizDesc: '私たちがチームで開発したプログラミングに関するクイズサイトです。',
                 sortTodoDesc: '私が個人で開発したソート機能付きTodoサイトです。ローカルファイルにデータを保存し、そこからデータを復元することもできます。',
+                dictionalyDesc: '辞書作成アプリです。単語は辞書順にソートされます。',
                 note: '上から入学1年目後期、入学1年目後期、2年目前期、2年目後期に開発したものです',
                 skillsTitle1: 'プログラミング言語スキル',
                 language: '使った言語',
@@ -23,6 +24,7 @@ const RepositoriesScreen = () => {
                 moveStoneDesc: 'This is a game where you move stones. When you win...',
                 maximumQuizDesc: 'This is a quiz site about programming that we developed as a team.',
                 sortTodoDesc: 'This is a Todo site with sorting functionality that I developed personally. It saves data to a local file and can also restore data from there.',
+                dictionalyDesc: 'This is a dictionary creation app. Words are sorted in dictionary order.',
                 note: 'From top to bottom, developed in the second semester of freshman year, first semester of sophomore year, and second semester of sophomore year.',
                 skillsTitle1: 'Programming Language Skills',
                 language: 'Language',
@@ -105,6 +107,18 @@ const RepositoriesScreen = () => {
                             </a>
                             <br></br>
                             <span className="text-gray-400">{getText('sortTodoDesc')}</span>
+                        </li>
+                        <li>
+                            <a
+                                href="https://tealands.github.io/MakeDictionaly/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 hover:text-blue-300 underline text-xl"
+                            >
+                                MakeDictionaly
+                            </a>
+                            <br></br>
+                            <span className="text-gray-400">{getText('dictionalyDesc')}</span>
                         </li>
                         <h3>{getText('note')}</h3>
                         
