@@ -8,7 +8,7 @@ const RepositoriesScreen = () => {
         const texts = {
             ja: {
                 numberPlaceDesc: 'ナンプレ（数独）ゲームです。クリアすると...',
-                moveStoneDesc: '石を動かすゲームです。クリアすると...',
+                moveStoneDesc: '石を動かせるようにした囲碁です。',
                 maximumQuizDesc: '私たちがチームで開発したプログラミングに関するクイズサイトです。',
                 sortTodoDesc: '私が個人で開発したソート機能付きTodoサイトです。ローカルファイルにデータを保存し、そこからデータを復元することもできます。',
                 dictionalyDesc: '辞書作成アプリです。単語は辞書順にソートされます。',
@@ -21,7 +21,7 @@ const RepositoriesScreen = () => {
             },
             en: {
                 numberPlaceDesc: 'This is a Number Place (Sudoku) game. When you clear it...',
-                moveStoneDesc: 'This is a game where you move stones. When you win...',
+                moveStoneDesc: 'This is a Go game where you can move stones.',
                 maximumQuizDesc: 'This is a quiz site about programming that we developed as a team.',
                 sortTodoDesc: 'This is a Todo site with sorting functionality that I developed personally. It saves data to a local file and can also restore data from there.',
                 dictionalyDesc: 'This is a dictionary creation app. Words are sorted in dictionary order.',
@@ -79,7 +79,7 @@ const RepositoriesScreen = () => {
                                 rel="noopener noreferrer"
                                 className="text-blue-400 hover:text-blue-300 underline text-xl"
                             >
-                                Move Stone
+                                {language === 'ja' ? '移碁' : 'Move Stone'}
                             </a>                            
                             <br></br>
                             <span className="text-gray-400">{getText('moveStoneDesc')}</span>
