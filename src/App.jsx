@@ -7,7 +7,6 @@ function App() {
     <div className="flex flex-col items-center relative">
       <Hero />
       <main className="relative z-10 w-full max-w-4xl mx-auto py-12">
-        {/* ここにホームの他のコンテンツを追加できます */}
       </main>
     </div>
   );

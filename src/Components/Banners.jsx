@@ -10,11 +10,13 @@ const Banners = () => {
     const texts = {
       ja: {
         reserveOfficer: '予備自衛官補って\n知ってますか？',
-        flightSim: 'Microsoft Flight Simulator 2024\n好評発売中！'
+        flightSim: 'Microsoft Flight Simulator 2024\n好評発売中！',
+        bannerSpace: '広告スペース'
       },
       en: {
         reserveOfficer: 'Do you know about\nReserve Self-Defense Officer?',
-        flightSim: 'Microsoft Flight Simulator 2024\nNow on Sale!'
+        flightSim: 'Microsoft Flight Simulator 2024\nNow on Sale!',
+        bannerSpace: 'Banner Space'
       }
     };
     return texts[language][key];
@@ -50,6 +52,12 @@ const Banners = () => {
             ))}
           </span>
         </a>
+      </div>
+
+      <div className="w-full h-28 flex items-center justify-center">
+        <span className="text-gray-500 font-medium text-lg">
+          {getText('bannerSpace')}
+        </span>
       </div>
     </div>
   );
